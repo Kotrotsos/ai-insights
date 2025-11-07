@@ -3,6 +3,7 @@ import { prisma } from '@/lib/prisma'
 import { BlogHeader } from '@/components/blog-header'
 import { BlogSidebar } from '@/components/blog-sidebar'
 import { MarkdownRenderer } from '@/components/markdown-renderer'
+import { PageViewTracker } from '@/components/page-view-tracker'
 
 interface BlogPostPageProps {
   params: {
@@ -58,6 +59,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12">
           <main>
             <article>
+              <PageViewTracker postId={post.id} />
               {post.coverImage && (
                 <img
                   src={post.coverImage}
