@@ -113,7 +113,7 @@ export default async function AdminDashboard() {
           <div className="space-y-2">
             <Link
               href="/admin/posts/new"
-              className="block p-4 border rounded-md hover:bg-accent transition-colors"
+              className="block p-4 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:shadow-md transition-all"
             >
               <div className="flex items-center gap-3">
                 <FileText className="w-5 h-5" />
@@ -128,7 +128,7 @@ export default async function AdminDashboard() {
 
             <Link
               href="/admin/posts"
-              className="block p-4 border rounded-md hover:bg-accent transition-colors"
+              className="block p-4 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:shadow-md transition-all"
             >
               <div className="flex items-center gap-3">
                 <FileText className="w-5 h-5" />
@@ -143,7 +143,7 @@ export default async function AdminDashboard() {
 
             <Link
               href="/admin/resources"
-              className="block p-4 border rounded-md hover:bg-accent transition-colors"
+              className="block p-4 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:shadow-md transition-all"
             >
               <div className="flex items-center gap-3">
                 <Link2 className="w-5 h-5" />
@@ -165,7 +165,7 @@ export default async function AdminDashboard() {
               <Link
                 key={post.slug}
                 href={`/admin/posts/${post.slug}/edit`}
-                className="block p-3 border rounded-md hover:bg-accent transition-colors"
+                className="block p-3 border rounded-md hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:shadow-md transition-all"
               >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
