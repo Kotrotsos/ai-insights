@@ -3,14 +3,15 @@ import { prisma } from '@/lib/prisma'
 import { PostForm } from '@/components/post-form'
 
 interface EditPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export default async function EditPostPage({ params }: EditPostPageProps) {
+  const { slug } = await params
   const post = await prisma.post.findUnique({
-    where: { slug: params.slug },
+    where: { slug },
     include: {
       categories: true,
     },

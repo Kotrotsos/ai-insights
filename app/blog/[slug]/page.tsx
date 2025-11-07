@@ -6,9 +6,9 @@ import { MarkdownRenderer } from '@/components/markdown-renderer'
 import { PageViewTracker } from '@/components/page-view-tracker'
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export async function generateStaticParams() {
@@ -23,8 +23,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
+  const { slug } = await params
   const post = await prisma.post.findUnique({
-    where: { slug: params.slug },
+    where: { slug },
   })
 
   if (!post) return {}
@@ -36,8 +37,9 @@ export async function generateMetadata({ params }: BlogPostPageProps) {
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
+  const { slug } = await params
   const post = await prisma.post.findUnique({
-    where: { slug: params.slug, published: true },
+    where: { slug, published: true },
     include: {
       categories: true,
       author: {

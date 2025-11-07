@@ -6,11 +6,12 @@ import { updatePostSchema } from '@/lib/validators'
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params
     const post = await prisma.post.findUnique({
-      where: { slug: params.slug },
+      where: { slug },
       include: {
         categories: true,
         author: {
@@ -39,9 +40,10 @@ export async function GET(
 
 export async function PATCH(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params
     const session = await getServerSession(authOptions)
 
     if (!session || (session.user as any).role !== 'ADMIN') {
@@ -73,7 +75,7 @@ export async function PATCH(
     }
 
     const post = await prisma.post.update({
-      where: { slug: params.slug },
+      where: { slug },
       data: updateData,
       include: {
         categories: true,
@@ -99,9 +101,10 @@ export async function PATCH(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
+    const { slug } = await params
     const session = await getServerSession(authOptions)
 
     if (!session || (session.user as any).role !== 'ADMIN') {
@@ -109,7 +112,7 @@ export async function DELETE(
     }
 
     await prisma.post.delete({
-      where: { slug: params.slug },
+      where: { slug },
     })
 
     return NextResponse.json({ success: true })
