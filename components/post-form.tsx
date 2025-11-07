@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { MediaLibrary } from './media-library'
+import { ImageIcon, X } from 'lucide-react'
 
 interface Category {
   id: string
@@ -28,6 +30,7 @@ export function PostForm({ post, categories }: PostFormProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [mediaLibraryOpen, setMediaLibraryOpen] = useState(false)
 
   const [formData, setFormData] = useState({
     title: post?.title || '',
@@ -162,16 +165,38 @@ export function PostForm({ post, categories }: PostFormProps) {
       </div>
 
       <div>
-        <label htmlFor="coverImage" className="block text-sm font-medium mb-1">
-          Cover Image URL
+        <label className="block text-sm font-medium mb-2">
+          Cover Image
         </label>
-        <input
-          id="coverImage"
-          type="url"
-          value={formData.coverImage}
-          onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
-          className="w-full px-3 py-2 border border-input bg-background rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
-        />
+        <div className="flex gap-4">
+          <button
+            type="button"
+            onClick={() => setMediaLibraryOpen(true)}
+            className="px-4 py-2 border border-input rounded-md hover:bg-accent flex items-center gap-2"
+          >
+            <ImageIcon className="w-4 h-4" />
+            Choose from Library
+          </button>
+          {formData.coverImage && (
+            <button
+              type="button"
+              onClick={() => setFormData({ ...formData, coverImage: '' })}
+              className="px-3 py-2 text-sm text-destructive hover:bg-destructive/10 rounded-md flex items-center gap-1"
+            >
+              <X className="w-4 h-4" />
+              Remove
+            </button>
+          )}
+        </div>
+        {formData.coverImage && (
+          <div className="mt-3 relative w-full max-w-md">
+            <img
+              src={formData.coverImage}
+              alt="Cover preview"
+              className="w-full h-48 object-cover rounded-md border"
+            />
+          </div>
+        )}
       </div>
 
       <div>
@@ -240,6 +265,16 @@ export function PostForm({ post, categories }: PostFormProps) {
           Cancel
         </button>
       </div>
+
+      <MediaLibrary
+        open={mediaLibraryOpen}
+        onClose={() => setMediaLibraryOpen(false)}
+        onSelect={(imageUrl) => {
+          setFormData({ ...formData, coverImage: imageUrl })
+          setMediaLibraryOpen(false)
+        }}
+        selectedUrl={formData.coverImage}
+      />
     </form>
   )
 }

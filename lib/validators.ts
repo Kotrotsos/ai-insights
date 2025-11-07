@@ -5,15 +5,13 @@ export const createPostSchema = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
   excerpt: z.string().min(1, 'Excerpt required').max(500, 'Excerpt too long'),
   content: z.string().min(1, 'Content required'),
-  coverImage: z.string().url('Invalid URL').optional().or(z.literal('')),
+  coverImage: z.string().optional(),
   readTime: z.string(),
   categories: z.array(z.string()).min(1, 'At least one category required'),
   published: z.boolean().default(false),
 })
 
-export const updatePostSchema = createPostSchema.partial().extend({
-  id: z.string(),
-})
+export const updatePostSchema = createPostSchema.partial()
 
 export const loginSchema = z.object({
   email: z.string().email('Invalid email'),
