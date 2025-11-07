@@ -5,10 +5,7 @@ nixPkgs = ['nodejs_20']
 cmds = ['npm ci']
 
 [phases.build]
-cmds = ['export DATABASE_URL="postgresql://placeholder:placeholder@localhost:5432/placeholder" && npm run build']
+cmds = ['npm run build']
 
 [start]
 cmd = 'npm start'
-
-[variables]
-DATABASE_URL = 'postgresql://placeholder:placeholder@localhost:5432/placeholder'
