@@ -11,16 +11,7 @@ interface BlogPostPageProps {
   }>
 }
 
-export async function generateStaticParams() {
-  const posts = await prisma.post.findMany({
-    where: { published: true },
-    select: { slug: true },
-  })
-
-  return posts.map((post) => ({
-    slug: post.slug,
-  }))
-}
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params }: BlogPostPageProps) {
   const { slug } = await params

@@ -4,7 +4,7 @@ import { BlogSidebar } from "@/components/blog-sidebar"
 import { MicroPost } from "@/components/micro-post"
 import { prisma } from "@/lib/prisma"
 
-export const revalidate = 60 // Revalidate every 60 seconds
+export const dynamic = 'force-dynamic'
 
 export default async function HomePage() {
   const posts = await prisma.post.findMany({
